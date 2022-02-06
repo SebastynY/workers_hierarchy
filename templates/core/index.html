@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+{% block title %}
+    Главная
+{% endblock %}
+
+
+{% block content %}
+
+    <table class="table table-dark table-striped table-sort table-arrows order-table" id="workers">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for field in fields %}
+                <th scope="col">{{ field }}</th>
+            {% endfor %}
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for subordinate in subordinates %}
+            <tr>
+                <td>{{ subordinate.id }}</td>
+                <td>
+                    {% if subordinate.position ==  Position.EMPLOYEE %}
+                        {{ subordinate.first_name }}
+                    {% else %}
+                        <a href="{% url 'index' subordinate.id %}" class="link-light">{{ subordinate.first_name }}</a>
+                    {% endif %}
+                </td>
+                <td>{{ subordinate.last_name }}</td>
+                <td>{{ subordinate.get_position_display }}</td>
+                <td>{{ subordinate.salary }}</td>
+                <td>{{ subordinate.superior.first_name }} {{ subordinate.superior.last_name }}</td>
+                <td>
+                    <a href="#link" class="btn btn-secondary" role="button">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
